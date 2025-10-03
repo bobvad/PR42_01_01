@@ -9,17 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\ic-item.png" />
     <None Remove="Images\shop.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Classes\" />
     <Folder Include="Context\" />
-    <Folder Include="Modell\" />
     <Folder Include="ViewModell\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\ic-item.png" />
     <Resource Include="Images\shop.png" />
   </ItemGroup>
 
