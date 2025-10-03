@@ -9,10 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\shop.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Classes\" />
     <Folder Include="Context\" />
     <Folder Include="Modell\" />
     <Folder Include="ViewModell\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\shop.png" />
   </ItemGroup>
 
 </Project>

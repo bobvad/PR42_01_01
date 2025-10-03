@@ -10,7 +10,8 @@
         Width="800"
         MinWidth="800"
         MinHeight="450" 
-        FontFamily="Century Gothic" Icon="/Images/shop.png">
+        FontFamily="Century Gothic" 
+        Icon="/Images/shop.png">
     <Grid>
         <Frame x:Name="frame" 
         NavigationUIVisibility="Hidden" 
