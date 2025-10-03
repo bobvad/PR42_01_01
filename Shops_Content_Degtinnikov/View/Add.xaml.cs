@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shops_Content_Degtinnikov.ViewModell;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,14 @@ namespace Shops_Content_Degtinnikov.View
     /// </summary>
     public partial class Add : Page
     {
-        public Add(Context.ItemsContext item)
+        public Add(object context)
         {
             InitializeComponent();
+            DataContext = new
+            {
+                item = context,
+                categorys = new VMCategorys()
+            };
         }
     }
 }
