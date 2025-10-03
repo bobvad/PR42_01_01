@@ -12,9 +12,9 @@ namespace Shops_Content_Degtinnikov.Context
 {
     public class CategorysContext: Category
     {
-        public static ObservableCollection<Category> AllCategorys()
+        public static ObservableCollection<CategorysContext> AllCategorys()
         {
-            ObservableCollection<Category> allCategorys = new ObservableCollection<Category>();
+            ObservableCollection<CategorysContext> allCategorys = new ObservableCollection<CategorysContext>();
             MySqlConnection connection = Connection.OpenConnection();
             MySqlDataReader dataReader = Connection.Query("SELECT * FROM Categorys", connection);
 

@@ -32,7 +32,7 @@ namespace Shops_Content_Degtinnikov.Context
         public static ObservableCollection<ItemsContext> AllItems()
         {
             ObservableCollection<ItemsContext> allItems = new ObservableCollection<ItemsContext>();
-            ObservableCollection<Category> allCategories = CategorysContext.AllCategorys();
+            ObservableCollection<CategorysContext> allCategories = CategorysContext.AllCategorys();
 
             MySqlConnection connection = Connection.OpenConnection();
             MySqlDataReader dataReader = Connection.Query("SELECT * FROM Items", connection);
