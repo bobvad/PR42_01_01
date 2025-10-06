@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Shops_Content_Degtinnikov"
         mc:Ignorable="d"
         Title="Shop_Content" 
+        WindowStartupLocation="CenterScreen"
         Height="450"
         Width="800"
         MinWidth="800"

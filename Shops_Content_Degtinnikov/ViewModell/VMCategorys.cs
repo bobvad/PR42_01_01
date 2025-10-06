@@ -13,8 +13,10 @@ namespace Shops_Content_Degtinnikov.ViewModell
     public class VMCategorys : INotifyPropertyChanged
     {
         public ObservableCollection<CategorysContext> Categorys { get; set; }
-        public VMCategorys() =>
+        public VMCategorys()
+        { 
             Categorys = CategorysContext.AllCategorys();
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

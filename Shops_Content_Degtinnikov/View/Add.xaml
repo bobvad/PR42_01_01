@@ -32,27 +32,28 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Название" VerticalAlignment="Top" Margin="10,10,10,0"/>
-            <TextBox Text="{Binding Item.Name}" Height="26" VerticalAlignment="Top" Margin="10,36,10,0"
+            <TextBox Text="{Binding Name}" Height="26" VerticalAlignment="Top" Margin="10,36,10,0"
                      VerticalContentAlignment="Center"/>
 
             <Label Content="Цена" VerticalAlignment="Top" Margin="10,10,10,0" Grid.Column="1"/>
-            <TextBox Text="{Binding Item.Price}" Height="25" VerticalAlignment="Top" Margin="10,37,10,0"
+            <TextBox Text="{Binding Price}" Height="25" VerticalAlignment="Top" Margin="10,37,10,0"
                      VerticalContentAlignment="Center" Grid.Column="1"/>
 
             <Label Content="Категория" VerticalAlignment="Top" Margin="10,67,10,0" Grid.ColumnSpan="2"/>
+
             <ComboBox x:Name="cbCategory"
-                      ItemsSource="{Binding Categorys.Categorys}"
+                      ItemsSource="{Binding Category.Id}" 
                       DisplayMemberPath="Name"
-                      SelectedValue="{Binding Item.Category.Id}"
+                      SelectedItem="{Binding Category}"
                       SelectedValuePath="Id"
                       Height="25" VerticalAlignment="Top" Margin="10,93,10,0" 
                       VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
 
             <Label Content="Описание:" VerticalAlignment="Top" Margin="10,123,10,0" Grid.ColumnSpan="2"/>
-            <TextBox Text="{Binding Item.Description}" Margin="10,150,10,40" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
+            <TextBox Text="{Binding Description}" Margin="10,150,10,40" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
 
             <Button Content="Сохранить" Width="100" Height="25" Margin="0,0,10,10" VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right" Grid.Column="1" Command="{Binding Item.OnSave}">
+                    HorizontalAlignment="Right" Grid.Column="1" Command="{Binding OnSave}">
                 <Button.Effect>
                     <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="2" Opacity="0.5" />
                 </Button.Effect>

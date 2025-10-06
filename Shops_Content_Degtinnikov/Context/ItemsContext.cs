@@ -1,13 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using Shops_Content_Degtinnikov.Classes;
 using Shops_Content_Degtinnikov.Modell;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Globalization;
 
 namespace Shops_Content_Degtinnikov.Context
 {
@@ -23,12 +18,8 @@ namespace Shops_Content_Degtinnikov.Context
         {
             if (save)
                 Save(true);
+            Category = new Category();
         }
-        public ItemsContext(Category category)
-        {
-            Category = category;
-        }
-
         public static ObservableCollection<ItemsContext> AllItems()
         {
             ObservableCollection<ItemsContext> allItems = new ObservableCollection<ItemsContext>();
@@ -52,55 +43,78 @@ namespace Shops_Content_Degtinnikov.Context
             Connection.CloseConnection(connection);
             return allItems;
         }
+
         public void Save(bool isNew = false)
         {
             MySqlConnection connection = Connection.OpenConnection();
 
-            if (isNew)
+            try
             {
-                MySqlDataReader dataItem = Connection.Query(
-                    $"INSERT INTO Items (" +
-                    $"Name, " +
-                    $"Price, " +
-                    $"Description) " +
-                    $"OUTPUT Inserted.Id " +
-                    $"VALUES (" +
-                    $"N'{this.Name}', " +
-                    $"{this.Price}, " +
-                    $"N'{this.Description}')", connection);
+                if (isNew)
+                {
+                    string priceValue = this.Price.ToString(CultureInfo.InvariantCulture).Replace(',', '.');
+                    string insertQuery = $"INSERT INTO Items (Name, Price, Description) " +
+                                       $"VALUES ('{this.Name}', {priceValue}, '{this.Description}')";
 
-                dataItem.Read();
-                this.Id = dataItem.GetInt32(0);
+                    using (MySqlCommand command = new MySqlCommand(insertQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    string selectIdQuery = "SELECT LAST_INSERT_ID()";
+                    using (MySqlCommand command = new MySqlCommand(selectIdQuery, connection))
+                    using (MySqlDataReader dataId = command.ExecuteReader())
+                    {
+                        if (dataId.Read())
+                        {
+                            this.Id = dataId.GetInt32(0);
+                        }
+                    }
+                }
+                else
+                {
+                    string categoryId = this.Category?.Id.ToString() ?? "NULL";
+
+                    string priceValue = this.Price.ToString(CultureInfo.InvariantCulture).Replace(',', '.');
+                    string updateQuery = $"UPDATE Items " +
+                                       $"SET Name = '{this.Name}', " +
+                                       $"Price = {priceValue}, " +
+                                       $"Description = '{this.Description}', " +
+                                       $"IdCategory = {categoryId} " +
+                                       $"WHERE Id = {this.Id}";
+
+                    using (MySqlCommand command = new MySqlCommand(updateQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
             }
-            else
+            finally
             {
-                string categoryId = this.Category?.Id.ToString() ?? "NULL";
-
-                Connection.Query(
-                    $"UPDATE Items " +
-                    $"SET " +
-                    $"Name = N'{this.Name}', " +
-                    $"Price = {this.Price}, " +
-                    $"Description = N'{this.Description}', " +
-                    $"IdCategory = {categoryId} " +
-                    $"WHERE " +
-                    $"Id = {this.Id}", connection);
+                Connection.CloseConnection(connection);
             }
-
-            Connection.CloseConnection(connection);
         }
-
         public void Delete()
         {
             MySqlConnection connection = Connection.OpenConnection();
             Connection.Query($"DELETE FROM Items WHERE Id = {this.Id}", connection);
             Connection.CloseConnection(connection);
         }
+        public RelayCommand OnDelete
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    Delete();
+                    (MainWindow.init.Main.DataContext as ViewModell.VMItems).Items.Remove(this);
+                });
+            }
+        }
         public RelayCommand OnEdit
         {
-            get 
+            get
             {
-                return new RelayCommand(obj => 
+                return new RelayCommand(obj =>
                 {
                     MainWindow.init.frame.Navigate(new View.Add(this));
                 });
@@ -108,12 +122,22 @@ namespace Shops_Content_Degtinnikov.Context
         }
         public RelayCommand OnSave
         {
-            get 
+            get
             {
-                return new RelayCommand(obj => 
+                return new RelayCommand(obj =>
                 {
-                    Category = CategorysContext.AllCategorys().Where(x => x.Id == this.Category.Id).First();
                     Save();
+                    var viewModel = MainWindow.init.Main.DataContext as ViewModell.VMItems;
+                    if (viewModel != null)
+                    {
+                        int index = viewModel.Items.IndexOf(this);
+                        if (index != -1)
+                        {
+                            viewModel.Items[index] = this;
+                        }
+                    }
+
+                    MainWindow.init.frame.Navigate(new View.Main());
                 });
             }
         }

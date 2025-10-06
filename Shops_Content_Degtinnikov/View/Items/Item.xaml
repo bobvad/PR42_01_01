@@ -24,7 +24,7 @@
             <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="2" Opacity="0.5"/>
         </Grid.Effect>
         <Image Width="50" Height="50" Source="/Images/ic-item.png" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
-        <Button Style="{StaticResource Update}" Content="Изменить" Width="55" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,72,0,0"  FontSize="10" Command="{Binding OnEdit}">
+        <Button Style="{StaticResource Update}" Content="Изменить" Width="55" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,72,0,0"  FontSize="10" Command="{Binding OnEdit}" >
             <Button.Effect>
                 <DropShadowEffect Direction="270" BlurRadius="5" ShadowDepth="2" Opacity="0.5"/>
             </Button.Effect>
@@ -42,19 +42,19 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Наименование" VerticalAlignment="Top" Margin="10,10,10,0"/>
-            <TextBox  Height="28" VerticalAlignment="Top" Margin="10,36,10,0"
-             VerticalContentAlignment="Center" SpellCheck.IsEnabled="False"/>
+            <TextBox Text="{Binding Name}" Height="28" VerticalAlignment="Top" Margin="10,36,10,0"
+             VerticalContentAlignment="Center" IsEnabled="False" SpellCheck.IsEnabled="False"/>
 
             <Label Content="Стоимость" VerticalAlignment="Top" Margin="10,10,10,0" Grid.Column="1"/>
-            <TextBox  Height="28" VerticalAlignment="Top" Margin="10,37,10,0"
-             VerticalContentAlignment="Center" SpellCheck.IsEnabled="False" Grid.Column="1"/>
+            <TextBox Text="{Binding Price}" Height="28" VerticalAlignment="Top" Margin="10,37,10,0"
+             VerticalContentAlignment="Center"  IsEnabled="False" SpellCheck.IsEnabled="False" Grid.Column="1"/>
 
             <Label Content="Категория" VerticalAlignment="Top" Margin="10,67,10,0" Grid.ColumnSpan="2"/>
-            <TextBox  Height="28" VerticalAlignment="Top" Margin="10,92,9,0"
-             VerticalContentAlignment="Center" SpellCheck.IsEnabled="False" Grid.ColumnSpan="2"/>
+            <TextBox Text="{Binding Category.Name}" Height="28" VerticalAlignment="Top" Margin="10,92,9,0"
+             VerticalContentAlignment="Center"  IsEnabled="False" SpellCheck.IsEnabled="False" Grid.ColumnSpan="2"/>
 
-            <Label Content="Описание" VerticalAlignment="Top" Margin="10,123,10,0" Grid.ColumnSpan="2"/>
-            <TextBox Margin="10,148,10,10" VerticalContentAlignment="Center"
+            <Label Content="Описание" VerticalAlignment="Top" Margin="10,120,10,0" Grid.ColumnSpan="2" Height="24"/>
+            <TextBox Text="{Binding Description}"  IsEnabled="False" Margin="10,145,10,14" VerticalContentAlignment="Center"
              SpellCheck.IsEnabled="False" Grid.ColumnSpan="2"/>
         </Grid>
     </Grid>
